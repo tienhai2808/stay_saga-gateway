@@ -7,9 +7,10 @@ builder.Services
   .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
   .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
   {
-    options.Authority = builder.Configuration["Keycloak:Authority"];
+    var authority = builder.Configuration["Keycloak:Authority"] ?? "";
+    options.Authority = authority;
     options.Audience = builder.Configuration["Keycloak:Audience"];
-    options.RequireHttpsMetadata = false;
+    options.RequireHttpsMetadata = authority.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
   });
 builder.Services.AddAuthorization();
 builder.Services.AddReverseProxy()
