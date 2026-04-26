@@ -1,12 +1,12 @@
-using Common.Middleware;
 using Common.Extensions;
+using Common.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddKeycloakJwtAuth(builder.Configuration);
 builder.Services.AddReverseProxy()
-  .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
 
